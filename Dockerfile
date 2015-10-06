@@ -9,9 +9,16 @@ RUN curl -s -k -L -C - -b "oraclelicense=accept-securebackup-cookie" http://down
 ENV JAVA_HOME /jdk1.8.0_60
 ENV PATH $PATH:$JAVA_HOME/bin
 
+# Install maven
+RUN curl -s http://apache.crihan.fr/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz | tar xzf - -C /
+
+ENV MAVEN_HOME /apache-maven-3.3.3
+ENV PATH $PATH:$MAVEN_HOME/bin
+
 WORKDIR /home/atmo
 
-ADD target/atmo-calc.jar /home/atmo/atmo-calc.jar
+ADD . /home/atmo
+RUN mvn package -DskipTests
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-DPROD_MODE=true", "-Xmx2G", "-jar", "atmo-calc.jar"]
+ENTRYPOINT ["java", "-DPROD_MODE=true", "-Xmx2G", "-jar", "target/atmo-calc.jar"]
