@@ -13,5 +13,5 @@ WORKDIR /home/atmo
 
 ADD target/atmo-calc.jar /home/atmo/atmo-calc.jar
 
-EXPOSE 9090
+EXPOSE 8080
 ENTRYPOINT ["java", "-DPROD_MODE=true", "-Xmx2G", "-jar", "atmo-calc.jar"]
