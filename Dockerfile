@@ -10,7 +10,7 @@ ENV JAVA_HOME /jdk1.8.0_60
 ENV PATH $PATH:$JAVA_HOME/bin
 
 # Install maven
-RUN curl -s http://apache.crihan.fr/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz | tar xzf - -C /
+RUN curl -s http://apache.crihan.fr/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz | tar xzf - -C /
 
 ENV MAVEN_HOME /apache-maven-3.3.3
 ENV PATH $PATH:$MAVEN_HOME/bin
