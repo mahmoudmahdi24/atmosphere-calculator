@@ -1,23 +1,45 @@
-node {
-    stage 'Defining Envrionment Variables'
-    env.JAVA_HOME="${tool 'JDK8'}"
-    def mvnHome = tool "Maven 3.x"
-    
-    stage 'Build'
-// getting the project from github    
-    git url: 'https://github.com/mahmoudmahdi24/atmosphere-calculator'
+/*
+ * Developed by M.MEHDI - Zenika
+ */
 
-// launching a maven clean package command    
-    sh "${mvnHome}/bin/mvn clean package"
+node {
+
+//Specifiyng the envrionment variables which will be used during the build process
+
+    stage 'Defining Envrionment Variables'
+
+        //Specifiyng the JDK tool (should be configured in Jenkins)
+        env.JAVA_HOME="${tool 'JDK8'}"
+
+        //Maven (should be configured in Jenkins)
+        def mvnHome = tool "Maven 3.x"
  
+//Build phase  
+
+    stage 'Build'
+
+        // getting the project from github :   
+        git url: 'https://github.com/mahmoudmahdi24/atmosphere-calculator'
+
+        // packaging the project using Maven :    
+        sh "${mvnHome}/bin/mvn clean package"
+
+//Unit testing phase 
+
     stage 'Unit Tests'
-    //launching unit tests
-    sh "${mvnHome}/bin/mvn test"
-    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-   
+
+        //launching unit tests :
+        sh "${mvnHome}/bin/mvn test"
+
+        //saving the unit tests report : 
+        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+
+//Building a docker image of the project
+
     stage 'Build Docker image'
-    //building a docker image of the project 
-    def image = docker.build('jcsirot/atmo-calc:snapshot', '.')
+    
+        //building the docker image by specifiying the snapshot name which is already specified in the POM.xml
+    def image = docker.build('mahmoudmahdi24/atmo-calc:snapshot', '.')
   
  //   stage 'Acceptance Tests'
  //     image.withRun('-p 8181:8181') {c ->
