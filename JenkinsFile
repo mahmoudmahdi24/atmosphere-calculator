@@ -24,7 +24,8 @@ node {
         //launching checkstyle tests
         sh"${mvnHome}/bin/mvn checkstyle:checkstyle"
 
-            step([$class: 'CheckStylePublisher', pattern: '**/checkstyle-result.xml', unstableTotalAll: '0', usePreviousBuildAsReference: true])
+        //    step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml', unstableTotalAll: '0', usePreviousBuildAsReference: true])
+        step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml'])
 
 // Stage : Build phase  
 
