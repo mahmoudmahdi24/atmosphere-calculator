@@ -25,7 +25,7 @@ node {
         sh"${mvnHome}/bin/mvn checkstyle:checkstyle"
 
         //    step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml', unstableTotalAll: '0', usePreviousBuildAsReference: true])
-        step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml'])
+        step([$class: 'CheckStylePublisher', testResults: '**/target/checkstyle-result.xml'])
 
 
 //Stage : pmd tests
@@ -34,7 +34,7 @@ node {
         //launching checkstyle tests
         sh"${mvnHome}/bin/mvn pmd:pmd"
 
-        step([$class: 'PmdPublisher', testResults: '**/pmd.xml'])
+        step([$class: 'PmdPublisher', testResults: '**/target/pmd.xml'])
 
 //Stage : pmd tests
     stage "findbugs"
@@ -42,7 +42,7 @@ node {
         //launching checkstyle tests
         sh"${mvnHome}/bin/mvn findbugs:findbugs"
 
-        step([$class: 'FindBugsPublisher', testResults: '**/findbugsXml.xml'])        
+        step([$class: 'FindBugsPublisher', testResults: '**/target/findbugsXml.xml'])        
    
 
 // Stage : Build phase  
