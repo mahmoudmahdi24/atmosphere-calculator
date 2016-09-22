@@ -25,8 +25,8 @@ node {
  //     }
  //   step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
 
-    stage 'Push Docker image'
-    docker.withRegistry("https://hub.docker.com/r/dockermahmoud", "dockermahmoud") {
-       image.push()
-    }
+ //   stage 'Push Docker image'
+ //   docker.withRegistry("https://hub.docker.com/r/dockermahmoud", "dockermahmoud") {
+ //      image.push()
+ //   }
 }
