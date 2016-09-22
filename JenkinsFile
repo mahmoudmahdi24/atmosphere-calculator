@@ -19,6 +19,9 @@ node {
         git url: 'https://github.com/mahmoudmahdi24/atmosphere-calculator'
  
  //Stage : checkstyle tests
+    stage "site"
+       sh"${mvnHome}/bin/mvn site" 
+        
     stage "checkstyle"
 
         //launching checkstyle tests
