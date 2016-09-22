@@ -39,25 +39,30 @@ node {
     stage 'Build Docker image'
     
         //building the docker image by specifiying the snapshot name which is already specified in the POM.xml
-    def image = docker.build('mahmoudmahdi24/atmo-calc:snapshot', '.')
+        def image = docker.build('mahmoudmahdi24/atmo-calc:snapshot', '.')
   
 
  //  Stage : Running acceptance test
     stage 'Acceptance tests'
+        
+        //running the app's server in background
         sh "nohup ${mvnHome}/bin/mvn exec:java -Dexec.mainClass="+"com.chelonix.atmocalc.server.Main &"
 
+        //running acceptance tests on the created docker image
         image.withRun('-p 8181:8181') {c ->
             sh "${mvnHome}/bin/mvn verify"
         }
+
+        //saving the acceptance tests reports
         step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
 
- //   step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
 
-// Stage : Pushing the docker image 
- //   stage 'Push Docker image'
- //   docker.withRegistry("https://hub.docker.com/r/dockermahmoud", "dockermahmoud") {
- //      image.push()
- //   }
+//  Stage : Pushing the docker image 
+    stage 'Push Docker image'
+    
+    docker.withRegistry("https://hub.docker.com/r/dockermahmoud", "dockermahmoud") {
+       image.push()
+    }
 }
 
 
