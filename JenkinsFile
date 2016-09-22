@@ -50,6 +50,7 @@ node {
 
         //running acceptance tests on the created docker image
         image.withRun('-p 8181:8181') {c ->
+            sh "nohup ${mvnHome}/bin/mvn exec:java -Dexec.mainClass="+"com.chelonix.atmocalc.server.Main &"
             sh "${mvnHome}/bin/mvn verify"
         }
 
@@ -58,12 +59,12 @@ node {
 
 
 //  Stage : Pushing the docker image 
-    stage 'Push Docker image'
+//    stage 'Push Docker image'
 
     //https://hub.docker.com/r/dockermahmoud/dockermahmoud/
-        docker.withRegistry("dockermahmoud/dockermahmoud","dockermahmoud") {
-        image.push()
-        }
+    //    docker.withRegistry("dockermahmoud/dockermahmoud","dockermahmoud") {
+    //    image.push()
+    //    }
 }
 
 
