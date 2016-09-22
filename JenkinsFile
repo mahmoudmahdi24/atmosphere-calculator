@@ -13,13 +13,20 @@ node {
 
         //Maven (should be configured in Jenkins)
         def mvnHome = tool "Maven 3.x"
- 
-// Stage : Build phase  
 
-    stage 'Build'
 
         // getting the project from github :   
         git url: 'https://github.com/mahmoudmahdi24/atmosphere-calculator'
+ 
+ //Stage : checkstyle tests
+    stage "checkstyle"
+
+        //launching checkstyle tests
+        sh"${mvnHome}/bin/mvn checkstyle:checkstyle"
+
+// Stage : Build phase  
+
+    stage 'Build'
 
         // packaging the project using Maven :    
         sh "${mvnHome}/bin/mvn clean package"
