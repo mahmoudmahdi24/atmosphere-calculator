@@ -35,6 +35,14 @@ node {
         sh"${mvnHome}/bin/mvn pmd:pmd"
 
         step([$class: 'PmdPublisher', testResults: '**/pmd.xml'])
+
+//Stage : pmd tests
+    stage "findbugs"
+
+        //launching checkstyle tests
+        sh"${mvnHome}/bin/mvn findbugs:gui:findbugs:gui"
+
+        step([$class: 'FindBugsPublisher', testResults: '**/findbugsXml.xml'])        
    
 
 // Stage : Build phase  
