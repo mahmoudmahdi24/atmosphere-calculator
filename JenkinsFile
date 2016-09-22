@@ -27,6 +27,16 @@ node {
         //    step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml', unstableTotalAll: '0', usePreviousBuildAsReference: true])
         step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml'])
 
+
+//Stage : pmd tests
+    stage "pmd"
+
+        //launching checkstyle tests
+        sh"${mvnHome}/bin/mvn pmd:pmd"
+
+        //    step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml', unstableTotalAll: '0', usePreviousBuildAsReference: true])
+   
+
 // Stage : Build phase  
 
     stage 'Build'
