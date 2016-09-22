@@ -44,7 +44,7 @@ node {
 
  //  Stage : Running acceptance test
     stage 'Acceptance Tests'
-        sh"${mvnHome}/bin/mvn exec:java -Dexec.mainClass="com.chelonix.atmocalc.server.Main"
+        sh '${mvnHome}/bin/mvn exec:java -Dexec.mainClass="com.chelonix.atmocalc.server.Main'
         
         image.withRun('-p 8181:8181') {c ->
             sh "${mvnHome}/bin/mvn verify"
