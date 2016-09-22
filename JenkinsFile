@@ -12,6 +12,7 @@ node {
  
     stage 'Unit Tests'
     //launching unit tests
+    sh "${mvnHome}/bin/mvn test"
     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
    
     stage 'Build Docker image'
