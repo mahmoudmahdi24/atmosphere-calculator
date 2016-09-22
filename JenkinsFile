@@ -44,7 +44,11 @@ node {
 
  //  Stage : Running acceptance test
     stage 'Running program'
-        sh "${mvnHome}/bin/mvn exec:java -Dexec.mainClass="+"com.chelonix.atmocalc.server.Main"
+        sh "nohup ${mvnHome}/bin/mvn exec:java -Dexec.mainClass="+"com.chelonix.atmocalc.server.Main &"
+
+        image.withRun('-p 8181:8181') {c ->
+            sh "${mvnHome}/bin/mvn verify"
+        }
 
  //   step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
 
@@ -55,9 +59,5 @@ node {
  //   }
 }
 
-     node {   
-        image.withRun('-p 8181:8181') {c ->
-            sh "${mvnHome}/bin/mvn verify"
-        }
-    }
+
 
