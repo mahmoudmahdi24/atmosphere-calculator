@@ -36,11 +36,11 @@ node {
 
         step([$class: 'PmdPublisher', testResults: '**/pmd.xml'])
 
-//Stage : findbugs tests
+//Stage : pmd tests
     stage "findbugs"
 
         //launching checkstyle tests
-        sh"${mvnHome}/bin/mvn findbugs:findbugs"
+        sh"${mvnHome}/bin/mvn findbugs:gui:findbugs:gui"
 
         step([$class: 'FindBugsPublisher', testResults: '**/findbugsXml.xml'])        
    
