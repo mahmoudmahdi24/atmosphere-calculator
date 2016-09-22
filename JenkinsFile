@@ -40,7 +40,7 @@ node {
     stage "findbugs"
 
         //launching checkstyle tests
-        sh"${mvnHome}/bin/mvn findbugs:gui:findbugs:gui"
+        sh"${mvnHome}/bin/mvn findbugs:findbugs"
 
         step([$class: 'FindBugsPublisher', testResults: '**/findbugsXml.xml'])        
    
