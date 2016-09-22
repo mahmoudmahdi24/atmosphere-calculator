@@ -7,9 +7,9 @@
   <version>0.2-SNAPSHOT</version>
 
   <scm>
-    <url>https://github.com/jcsirot/atmosphere-calculator</url>
-    <connection>scm:git:git://github.com/jcsirot/atmosphere-calculator.git</connection>
-    <developerConnection>scm:git:git@github.com:jcsirot/atmosphere-calculator.git</developerConnection>
+    <url>https://github.com/mahmoudmahdi24/atmosphere-calculator</url>
+    <connection>scm:git:git://github.com/mahmoudmahdi24/atmosphere-calculator.git</connection>
+    <developerConnection>scm:git:git@github.com:mahmoudmahdi24/atmosphere-calculator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 <properties>
