@@ -59,10 +59,11 @@ node {
 
 //  Stage : Pushing the docker image 
     stage 'Push Docker image'
+
     //https://hub.docker.com/r/dockermahmoud/dockermahmoud/
-    docker.withRegistry("https://hub.docker.com/r/dockermahmoud/dockermahmoud/", "dockermahmoud") {
-       image.push()
-    }
+        docker.withRegistry("https://hub.docker.com/", "dockermahmoud") {
+        image.push()
+        }
 }
 
 
