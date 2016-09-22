@@ -39,7 +39,7 @@ node {
     stage 'Build Docker image'
     
         //building the docker image by specifiying the snapshot name which is already specified in the POM.xml
-        def image = docker.build('mahmoudmahdi24/atmo-calc:snapshot', '.')
+        def image = docker.build('dockermahmoud/dockermahmoud', '.')
   
 
  //  Stage : Running acceptance test
@@ -61,7 +61,7 @@ node {
     stage 'Push Docker image'
 
     //https://hub.docker.com/r/dockermahmoud/dockermahmoud/
-        docker.withRegistry("https://hub.docker.com/", "dockermahmoud") {
+        docker.withRegistry("https://hub.docker.com/r/", "dockermahmoud") {
         image.push()
         }
 }
