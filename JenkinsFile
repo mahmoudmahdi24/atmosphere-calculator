@@ -1,0 +1,86 @@
+/*
+ * Developed by M.MEHDI - Zenika
+ */
+
+node {
+
+// Stage : Specifiyng the envrionment variables which will be used during the build process
+
+    stage 'Defining Envrionment Variables'
+
+        //Specifiyng the JDK tool (should be configured in Jenkins)
+        env.JAVA_HOME="${tool 'JDK8'}"
+
+        //Maven (should be configured in Jenkins)
+        def mvnHome = tool "Maven 3.x"
+
+        // getting the project from github :   
+        git url: 'https://github.com/mahmoudmahdi24/atmosphere-calculator'
+ 
+ //Stage : checkstyle tests
+
+    stage "checkstyle"
+
+        //launching checkstyle tests
+        sh"${mvnHome}/bin/mvn checkstyle:checkstyle"
+
+        //    step([$class: 'CheckStylePublisher', testResults: '**/checkstyle-result.xml', unstableTotalAll: '0', usePreviousBuildAsReference: true])
+        step([$class: 'CheckStylePublisher', testResults: '**/target/checkstyle-result.xml'])
+
+
+//Stage : pmd tests
+
+    stage "pmd"
+
+        //launching checkstyle tests
+        sh"${mvnHome}/bin/mvn pmd:pmd"
+
+        step([$class: 'PmdPublisher', testResults: '**/target/pmd.xml'])
+
+//Stage : findbugs tests
+
+    stage "findbugs"
+
+        //launching checkstyle tests
+        sh"${mvnHome}/bin/mvn findbugs:findbugs"
+
+        step([$class: 'FindBugsPublisher', testResults: '**/target/findbugsXml.xml'])        
+   
+
+// Stage : Build phase  
+
+    stage 'Build'
+
+        // packaging the project using Maven :    
+        sh "${mvnHome}/bin/mvn clean package"
+
+// Stage : Unit testing phase 
+
+    stage 'Unit Tests'
+
+        //launching unit tests :
+        sh "${mvnHome}/bin/mvn test"
+
+        //saving the unit tests report : 
+        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+
+ //  Stage : Running acceptance test
+
+    stage 'Acceptance tests'
+
+        //running acceptance tests on the created docker image
+
+            //running the app's server in background
+            sh "nohup ${mvnHome}/bin/mvn exec:java -Dexec.mainClass="+"com.chelonix.atmocalc.server.Main &"
+
+            sh "${mvnHome}/bin/mvn verify"
+        
+        //saving the acceptance tests reports
+        step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
+
+
+}
+
+
+
+
