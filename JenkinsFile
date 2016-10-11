@@ -80,6 +80,9 @@ node {
         
         //saving the acceptance tests reports
         step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
+        
+         mail body: ‘A new build is awaiting: ’ + fileName, subject: ‘New build available’, to: ‘mahmoudmahdi24@gmail.com’
+
 
 }
 
